@@ -12,9 +12,7 @@ export default function App({ authenticated, setAuthenticated } : AppProps ) {
     return (
         <Router>
             <Routes>
-                <Route path="/" element={
-                    <WelcomePage setAuthenticated={setAuthenticated} />
-                } />
+                <Route path="/" element={ <WelcomePage />} />
                 <Route path="/login" element={<LoginPage setAuthenticated={setAuthenticated} />} />
                 <Route path="/registro" element={<RegisterPage setAuthenticated={setAuthenticated} />} />
             </Routes>
