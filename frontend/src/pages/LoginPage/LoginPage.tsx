@@ -41,6 +41,7 @@ export default function LoginPage({ setAuthenticated }: LoginPageProps) {
                     <h1 className="text-2xl font-semibold tracking-tight">
                         Entrar
                     </h1>
+
                     <p className="text-muted-foreground text-sm">
                         Acesse sua conta para continuar
                     </p>
@@ -70,6 +71,11 @@ export default function LoginPage({ setAuthenticated }: LoginPageProps) {
                     </div>
 
                     <div className="relative space-y-2">
+                            required
+                        />
+                    </div>
+
+                    <div className="space-y-2">
                         <label
                             htmlFor="password"
                             className="text-sm font-medium"
@@ -89,6 +95,8 @@ export default function LoginPage({ setAuthenticated }: LoginPageProps) {
                                 Senha é obrigatória
                             </span>
                         )}
+                            required
+                        />
                     </div>
 
                     <Button
@@ -105,6 +113,16 @@ export default function LoginPage({ setAuthenticated }: LoginPageProps) {
                     <a
                         href="/registro"
                         className="text-primary font-medium hover:underline"
+                    >
+                        Entrar
+                    </Button>
+                </form>
+
+                <p className="text-center text-sm text-muted-foreground">
+                    Não tem conta?{" "}
+                    <a
+                        href="/registro"
+                        className="font-medium text-primary hover:underline"
                     >
                         Criar conta
                     </a>

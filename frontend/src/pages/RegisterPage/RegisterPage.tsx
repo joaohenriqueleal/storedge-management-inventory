@@ -97,14 +97,6 @@ export default function RegisterPage({ setAuthenticated }: RegisterPageProps) {
                             type="password"
                             placeholder="••••••••"
                             autoComplete="new-password"
-                            aria-invalid={!!errors.password}
-                            {...register("password", { required: true })}
-                        />
-                        {errors.password && (
-                            <span className="text-destructive absolute -bottom-3.5 left-0 text-sm">
-                                Senha é obrigatória
-                            </span>
-                        )}
                     </div>
 
                     <Button
