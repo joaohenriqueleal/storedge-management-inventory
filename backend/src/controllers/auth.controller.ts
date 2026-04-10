@@ -1,20 +1,30 @@
+<<<<<<< HEAD
 import { Request, Response } from 'express';
 import { PrismaClient } from '@prisma/client';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
+=======
+import { Request, Response } from "express";
+import { PrismaClient } from "@prisma/client";
+import bcrypt from "bcrypt";
+// 2.  o mensageiro
+>>>>>>> 3dd0457fa8668a1fad05830a3e22e2b31c3ef9dd
 const prisma = new PrismaClient();
 
 export const register = async (req: Request, res: Response) => {
   const { username, email, password } = req.body;
 
   if (!username || !email || !password) {
-    return res.status(400).json({ message: "Por favor, preencha todos os campos (username, email, password)." });
+    return res.status(400).json({
+      message:
+        "Por favor, preencha todos os campos (username, email, password).",
+    });
   }
 
   try {
     const usuarioExiste = await prisma.user.findUnique({
-      where: { email: email }
+      where: { email: email },
     });
 
     if (usuarioExiste) {
@@ -28,8 +38,13 @@ export const register = async (req: Request, res: Response) => {
       data: {
         username: username,
         email: email,
+<<<<<<< HEAD
         password: senhaCriptografada,
       }
+=======
+        password: senhaCriptografada, // <- Agora o banco vai receber o código embaralhado!
+      },
+>>>>>>> 3dd0457fa8668a1fad05830a3e22e2b31c3ef9dd
     });
 
     const token = jwt.sign({ id: novoUsuario.id, email: novoUsuario.email }, process.env.JWT_SECRET as string, { expiresIn: '1h' });
@@ -51,11 +66,15 @@ export const register = async (req: Request, res: Response) => {
         id: novoUsuario.id,
         username: novoUsuario.username,
         email: novoUsuario.email,
+<<<<<<< HEAD
         created_at: novoUsuario.created_at
       },
       token: token,
+=======
+        created_at: novoUsuario.created_at,
+      },
+>>>>>>> 3dd0457fa8668a1fad05830a3e22e2b31c3ef9dd
     });
-
   } catch (error) {
     console.log(error);
     return res.status(500).json({ message: "Erro interno no servidor." });
@@ -66,6 +85,7 @@ export const login = async (req: Request, res: Response) => {
   const { email, password } = req.body;
 
   if (!email || !password) {
+<<<<<<< HEAD
     return res.status(400).json({ message: "Por favor, preencha todos os campos (email, password)." });
   }
 
@@ -111,3 +131,15 @@ export const login = async (req: Request, res: Response) => {
     return res.status(500).json({ message: "Erro interno do servidor." });
   }
 };
+=======
+    return res
+      .status(400)
+      .json({ message: "E-mail e senha são obrigatórios para o login." });
+  }
+
+  return res.status(200).json({
+    message: "Login realizado com sucesso!",
+    token: "aqui-vai-entrar-um-token-jwt-no-futuro",
+  });
+};
+>>>>>>> 3dd0457fa8668a1fad05830a3e22e2b31c3ef9dd
