@@ -1,12 +1,17 @@
 import type { LoginPageProps } from "./LoginPage.types"
 
+import PageContainer from "../../components/containers/PageContainer/PageContainer"
+import Container from "@/components/containers/Container/Container"
+import Link from "@/components/navigation/Link/Link"
+import Title from "@/components/ui/Title/Title"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import PageContainer from "../../components/containers/PageContainer/PageContainer"
 
-import { useForm, type SubmitHandler } from "react-hook-form"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
-import { loginUser, type LoginInputs } from "@/api/fn/auth"
+import { useForm, type SubmitHandler } from "react-hook-form"
+import { loginUser } from "@/api/fn/auth"
+
+import type { LoginInputs } from "@/types/LoginInputs"
 import { toast } from "sonner"
 
 export default function LoginPage({ setAuthenticated }: LoginPageProps) {
@@ -37,41 +42,44 @@ export default function LoginPage({ setAuthenticated }: LoginPageProps) {
 
     return (
         <PageContainer className="flex min-h-screen items-center justify-center px-4">
-            <div className="bg-background w-full max-w-sm space-y-6 rounded-2xl border p-6 shadow-sm">
-                <div className="space-y-2 text-center">
-                    <h1 className="text-2xl font-semibold tracking-tight">
+            <Container className="bg-background w-full max-w-sm space-y-6 rounded-2xl border p-6 shadow-sm">
+                <Container className="space-y-2 text-center">
+                    <Title
+                        level={1}
+                        className="text-2xl font-semibold tracking-tight"
+                    >
                         Entrar
-                    </h1>
+                    </Title>
 
                     <p className="text-muted-foreground text-sm">
                         Acesse sua conta para continuar
                     </p>
-                </div>
+                </Container>
 
                 <form
                     onSubmit={handleSubmit(onSubmit)}
                     className="flex flex-col gap-4"
                 >
-                    <div className="relative space-y-2">
-                        <label htmlFor="name" className="text-sm font-medium">
-                            Nome
+                    <Container className="relative space-y-2">
+                        <label htmlFor="email" className="text-sm font-medium">
+                            Email
                         </label>
                         <Input
-                            id="name"
-                            type="text"
-                            placeholder="Digite seu nome"
+                            id="email"
+                            type="email"
+                            placeholder="Digite seu email"
                             autoComplete="username"
-                            aria-invalid={!!errors.name}
-                            {...register("name", { required: true })}
+                            aria-invalid={!!errors.email}
+                            {...register("email", { required: true })}
                         />
-                        {errors.name && (
+                        {errors.email && (
                             <span className="text-destructive absolute -bottom-3.5 left-0 text-sm">
-                                Nome é obrigatório
+                                Email é obrigatório
                             </span>
                         )}
-                    </div>
+                    </Container>
 
-                    <div className="relative space-y-2">
+                    <Container className="relative space-y-2">
                         <label
                             htmlFor="password"
                             className="text-sm font-medium"
@@ -91,7 +99,7 @@ export default function LoginPage({ setAuthenticated }: LoginPageProps) {
                                 Senha é obrigatória
                             </span>
                         )}
-                    </div>
+                    </Container>
 
                     <Button
                         type="submit"
@@ -104,14 +112,14 @@ export default function LoginPage({ setAuthenticated }: LoginPageProps) {
 
                 <p className="text-muted-foreground text-center text-sm">
                     Não tem conta?{" "}
-                    <a
+                    <Link
+                        className="font-medium text-primary hover:underline"
                         href="/registro"
-                        className="text-primary font-medium hover:underline"
                     >
                         Criar conta
-                    </a>
+                    </Link>
                 </p>
-            </div>
+            </Container>
         </PageContainer>
     )
 }
