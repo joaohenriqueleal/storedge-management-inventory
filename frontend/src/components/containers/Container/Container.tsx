@@ -1,5 +1,5 @@
 import type { ContainerProps } from "./Container.types"
 
-export default function Container({ className, children }: ContainerProps) {
-    return <div className={className}>{children}</div>
+export default function Container({ ...props }: ContainerProps) {
+    return <div {...props} />
 }

@@ -1,12 +1,13 @@
 import Globals from "@/shared/globals"
 import axios from "axios"
 
-import type { RegisterInputs } from "@/types/RegisterInputs"
 import type { LoginInputs } from "@/types/LoginInputs"
+import type { RegisterInputs } from "@/types/RegisterInputs"
 
 export const registerUser = async (data: RegisterInputs) => {
     const response = await axios.post(
-        `${Globals.baseUrl}${Globals.registerRoute}`,
+        // `${Globals.baseUrl}${Globals.registerRoute}`,
+        "http://localhost:3000/auth/register/",
         data
     )
     return response.data

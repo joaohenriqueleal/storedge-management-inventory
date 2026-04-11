@@ -1,4 +1,3 @@
-export interface ContainerProps {
-    children: React.ReactNode
-    className?: string
-}
+import type { ComponentProps } from "react"
+
+export interface ContainerProps extends ComponentProps<"div"> {}
