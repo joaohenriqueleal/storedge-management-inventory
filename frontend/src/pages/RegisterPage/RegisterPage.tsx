@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 
 import { useMutation, useQueryClient } from "@tanstack/react-query"
+import { defineCredentials } from "@/utils/storageCredentials"
 import { useForm, type SubmitHandler } from "react-hook-form"
 import { registerUser } from "@/api/fn/auth"
 
@@ -16,7 +17,7 @@ import { toast } from "sonner"
 
 export default function RegisterPage({ setAuthenticated }: RegisterPageProps) {
     const queryClient = useQueryClient()
-
+    
     const {
         register,
         handleSubmit,
@@ -25,9 +26,10 @@ export default function RegisterPage({ setAuthenticated }: RegisterPageProps) {
 
     const mutation = useMutation({
         mutationFn: registerUser,
-        onSuccess: () => {
+        onSuccess: (data) => {
             queryClient.invalidateQueries({ queryKey: ["user"] })
             toast.success("Conta criada com sucesso!")
+            defineCredentials(data.token, data.user.username)
             setAuthenticated(true)
         },
         onError: () => {

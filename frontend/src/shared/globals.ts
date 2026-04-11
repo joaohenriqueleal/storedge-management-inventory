@@ -4,4 +4,8 @@ export default abstract class Globals {
     // auth routes
     static readonly registerRoute: string = "auth/register/"
     static readonly loginRoute: string = "auth/login/"
+
+    // credentials storage
+    static readonly usernameItem: string = "username"
+    static readonly tokenItem: string = "token"
 }

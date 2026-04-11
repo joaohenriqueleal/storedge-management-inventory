@@ -2,6 +2,9 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+@import "./animations/animate-tab-close.css";
+@import "./animations/animate-tab-open.css";
+
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
