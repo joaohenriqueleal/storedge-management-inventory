@@ -14,7 +14,6 @@ import {
     FaBolt,
     FaCheckCircle
 } from "react-icons/fa"
-import { Button } from "@/components/ui/button"
 
 const navLinks = [
     { label: "Início", href: "#inicio" },
@@ -185,7 +184,7 @@ export default function WelcomePage() {
                 </Section>
             </Main>
 
-            <Footer className="mt-24 border-t bg-gray-200">
+            <Footer className="mt-24 border-t bg-card dark:border-gray-800">
                 <Container className="mx-auto grid max-w-6xl gap-10 px-4 py-12 md:grid-cols-3">
                     <Section className="space-y-3">
                         <Title level={3}>Contato</Title>

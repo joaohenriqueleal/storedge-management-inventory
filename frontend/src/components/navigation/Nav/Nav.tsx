@@ -27,7 +27,7 @@ export default function Nav({
     return (
         <nav className="grid grid-cols-2 items-center gap-2 border-b px-4 py-2 md:grid-cols-3 lg:px-[10%]">
             <Link
-                href="/"
+                href="#inicio"
                 className="aspect-square size-14! shrink-0 p-2!"
                 variant="ghost"
             >
@@ -50,7 +50,7 @@ export default function Nav({
                     Login <FaUser />
                 </Link>
                 <Link href="/registro">
-                    Criar <FaUserPlus />
+                    Registrar <FaUserPlus />
                 </Link>
             </Container>
 

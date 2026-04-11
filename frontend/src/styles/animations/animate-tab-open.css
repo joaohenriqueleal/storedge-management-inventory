@@ -1,0 +1,13 @@
+@charset "UTF-8";
+
+
+@layer utilities {
+    @keyframes animate-tab-open {
+        from { transform: translateX(100%); }
+        to { transform: translateX(0%); }
+    }
+
+    .animate-tab-open {
+        animation: animate-tab-open .3s ease-in-out forwards;
+    }
+}

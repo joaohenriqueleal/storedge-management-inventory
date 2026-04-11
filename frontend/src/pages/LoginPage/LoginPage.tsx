@@ -9,6 +9,7 @@ import PageContainer from "../../components/containers/PageContainer/PageContain
 
 import { loginUser } from "@/api/fn/auth"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
+import { defineCredentials } from "@/utils/storageCredentials"
 import { useForm, type SubmitHandler } from "react-hook-form"
 
 import type { LoginInputs } from "@/types/LoginInputs"
@@ -28,6 +29,7 @@ export default function LoginPage({ setAuthenticated }: LoginPageProps) {
         onSuccess: (data) => {
             queryClient.invalidateQueries({ queryKey: ["user"] })
             toast.success("Login realizado com sucesso!")
+            defineCredentials(data.token, data.user.username)
             setAuthenticated(true)
             console.log(data)
         },
