@@ -2,9 +2,13 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+@import "./animations/animate-tab-close.css";
+@import "./animations/animate-tab-open.css";
+
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
+    --spacing-layout: 1200px;
     --color-background: var(--background);
     --color-foreground: var(--foreground);
     --color-card: var(--card);
@@ -119,36 +123,6 @@
     }
 
     body {
-        @apply bg-background text-foreground text-base;
+        @apply bg-background text-foreground;
     }
-    label {
-        @apply text-sm;
-    }
-    span {
-        color: inherit;
-        line-height: inherit;
-        font-size: inherit;
-        font-weight: inherit;
-    }
-    h1 {
-        @apply text-heading-primary;
-    }
-    h2 {
-        @apply text-heading-secondary;
-    }
-    h3 {
-        @apply text-heading-tertiary;
-    }
-}
-@utility text-heading-primary {
-    @apply text-4xl leading-tight font-bold lg:text-6xl;
-}
-@utility text-heading-secondary {
-    @apply text-xl font-bold lg:text-4xl;
-}
-@utility text-heading-tertiary {
-    @apply text-lg font-medium;
-}
-@utility text-heading {
-    @apply text-base font-medium;
 }

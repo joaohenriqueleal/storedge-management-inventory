@@ -1,20 +1,34 @@
-import PageContainer from "../../components/containers/PageContainer/PageContainer"
-import Container from "../../components/containers/Container/Container"
-import Section from "../../components/containers/Section/Section"
-import Footer from "../../components/containers/Footer/Footer"
-import Main from "../../components/containers/Main/Main"
-import Nav from "../../components/navigation/Nav/Nav"
-import Title from "../../components/ui/Title/Title"
-import { Link } from "@/components/ui/link"
+import { Menu } from "lucide-react"
 import {
+    FaBolt,
     FaBox,
+    FaChartBar,
+    FaCheckCircle,
     FaExchangeAlt,
     FaHandshake,
-    FaChartBar,
-    FaBolt,
-    FaCheckCircle
+    FaMoon,
+    FaSun,
+    FaUser,
+    FaUserPlus
 } from "react-icons/fa"
-import { Button } from "@/components/ui/button"
+
+import LogoStoredge from "@/assets/logo.png"
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuTrigger
+} from "@/components/common/dropdown-menu"
+import { NavBar } from "@/components/common/nav-bar"
+import {
+    Button,
+    Card,
+    Container,
+    Image,
+    Link,
+    Typography
+} from "@/components/ui"
+import { useTheme } from "@/lib/theme"
 
 const navLinks = [
     { label: "Início", href: "#inicio" },
@@ -25,202 +39,292 @@ const navLinks = [
 const features = [
     {
         icon: FaBox,
-        color: "from-blue-500/20 to-cyan-500/20",
         title: "Cadastro de produtos",
         desc: "Organize itens com categorias, variações e detalhes completos"
     },
     {
         icon: FaExchangeAlt,
-        color: "from-purple-500/20 to-pink-500/20",
         title: "Entradas e saídas",
         desc: "Acompanhe movimentações com histórico claro"
     },
     {
         icon: FaHandshake,
-        color: "from-green-500/20 to-emerald-500/20",
         title: "Fornecedores",
         desc: "Centralize contatos e relações comerciais"
     },
     {
         icon: FaChartBar,
-        color: "from-orange-500/20 to-yellow-500/20",
         title: "Relatórios",
         desc: "Tenha visão estratégica do seu estoque"
     }
 ]
 
 export default function WelcomePage() {
+    const { theme, toggleTheme } = useTheme()
+
     return (
-        <PageContainer>
-            <div className="bg-background/70 sticky top-0 z-50 border-b backdrop-blur-xl">
-                <Nav navLinks={navLinks} />
-            </div>
-
-            <Main className="mx-auto flex max-w-6xl flex-col gap-32 px-4 py-20">
-                <Section
-                    id="inicio"
-                    className="relative flex flex-col items-center gap-10 text-center"
+        <Container gap="2xl">
+            <NavBar className="grid grid-cols-2 items-center gap-2 border-b py-2 md:grid-cols-3">
+                <Link
+                    to="#inicio"
+                    className="aspect-square size-14! shrink-0 p-2!"
+                    variant="ghost"
                 >
-                    <div className="from-primary/30 to-secondary/30 absolute -z-10 h-80 w-80 rounded-full bg-linear-to-r blur-3xl dark:opacity-90" />
+                    <Image alt="Logo StorEdge" src={LogoStoredge} />
+                </Link>
 
-                    <Title level={1} className="text-balance">
+                <Container
+                    gap="sm"
+                    flexRow
+                    className="hidden items-center justify-center md:flex"
+                >
+                    {navLinks.map((link) => (
+                        <Link key={link.label} variant="ghost" to={link.href}>
+                            {link.label}
+                        </Link>
+                    ))}
+                </Container>
+
+                <Container
+                    flexRow
+                    className="hidden items-center justify-end gap-2 md:flex"
+                >
+                    <Button variant="ghost" size="icon" onClick={toggleTheme}>
+                        {theme === "dark" ? <FaSun /> : <FaMoon />}
+                    </Button>
+                    <Link to="/login" variant="ghost">
+                        Login <FaUser />
+                    </Link>
+                    <Link to="/registro">
+                        Registrar <FaUserPlus />
+                    </Link>
+                </Container>
+
+                <DropdownMenu>
+                    <DropdownMenuTrigger
+                        nativeButton
+                        render={
+                            <Button
+                                variant="ghost"
+                                className="ml-auto md:hidden"
+                                size="icon"
+                            />
+                        }
+                    >
+                        <Menu />
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent className="space-y-2 *:w-full!">
+                        {navLinks.map((link) => (
+                            <DropdownMenuItem
+                                key={link.label}
+                                render={<Link variant="ghost" to={link.href} />}
+                            >
+                                {link.label}
+                            </DropdownMenuItem>
+                        ))}
+                        <DropdownMenuItem
+                            render={<Link to="/login" variant="ghost" />}
+                        >
+                            Login <FaUser />
+                        </DropdownMenuItem>
+                        <DropdownMenuItem
+                            render={<Link to="/registro" variant="ghost" />}
+                        >
+                            Criar <FaUserPlus />
+                        </DropdownMenuItem>
+                        <DropdownMenuItem
+                            nativeButton
+                            closeOnClick={false}
+                            render={
+                                <Button
+                                    variant="ghost"
+                                    size="icon"
+                                    onClick={toggleTheme}
+                                />
+                            }
+                        >
+                            {theme === "dark" ? <FaSun /> : <FaMoon />}
+                        </DropdownMenuItem>
+                    </DropdownMenuContent>
+                </DropdownMenu>
+            </NavBar>
+
+            <Container as="main" layout gap="2xl">
+                <Container
+                    as="section"
+                    id="inicio"
+                    gap="lg"
+                    className="relative mx-auto max-w-2xl text-center"
+                >
+                    <div className="from-primary/30 to-secondary/30 absolute top-0 left-1/2 -z-10 mx-auto h-80 w-80 -translate-x-1/2 rounded-full bg-linear-to-r blur-3xl" />
+
+                    <Typography variant="h1">
                         Controle de estoque
-                        <span className="to-primary from-foreground block bg-linear-to-r bg-clip-text text-transparent">
+                        <Typography variant="span" color="gradient">
                             simples e poderoso
-                        </span>
-                    </Title>
+                        </Typography>
+                    </Typography>
 
-                    <p className="text-muted-foreground text-heading-tertiary max-w-2xl text-balance">
+                    <Typography as="p" variant="h3" color="muted">
                         Gerencie produtos, movimentações e relatórios em uma
                         plataforma moderna, rápida e intuitiva.
-                    </p>
+                    </Typography>
 
-                    <div className="flex flex-wrap justify-center gap-4">
+                    <Container flexRow className="flex-wrap justify-center">
                         <Link
-                            href="#sobre"
+                            to="#sobre"
                             variant="default"
-                            className="px-6 py-2 transition hover:scale-105"
+                            size="lg"
+                            animation="scale-on-hover"
                         >
                             Começar
                         </Link>
                         <Link
-                            href="#suporte"
+                            to="#suporte"
                             variant="outline"
-                            className="px-6 py-2 transition hover:scale-105"
+                            size="lg"
+                            animation="scale-on-hover"
                         >
                             Suporte
                         </Link>
-                    </div>
+                    </Container>
 
-                    <div className="text-muted-foreground mt-6 flex flex-wrap items-center justify-center gap-6 text-xs">
-                        <span className="flex items-center gap-2">
-                            <FaCheckCircle /> Simples
-                        </span>
-                        <span className="flex items-center gap-2">
-                            <FaBolt /> Rápido
-                        </span>
-                        <span className="flex items-center gap-2">
-                            <FaChartBar /> Escalável
-                        </span>
-                    </div>
-                </Section>
-
-                <Section id="features" className="space-y-14">
-                    <Title
-                        level={2}
-                        className="text-center text-3xl font-semibold"
+                    <Container
+                        flexRow
+                        gap="lg"
+                        className="text-muted-foreground flex-wrap items-center justify-center *:text-xs"
                     >
+                        <Typography className="flex items-center gap-2">
+                            <FaCheckCircle /> Simples
+                        </Typography>
+                        <Typography className="flex items-center gap-2">
+                            <FaBolt /> Rápido
+                        </Typography>
+                        <Typography className="flex items-center gap-2">
+                            <FaChartBar /> Escalável
+                        </Typography>
+                    </Container>
+                </Container>
+
+                <Container as="section" id="features" gap="xl">
+                    <Typography variant="h2" align="center">
                         Funcionalidades
-                    </Title>
+                    </Typography>
 
-                    <Container className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
-                        {features.map(({ icon: Icon, title, desc, color }) => (
-                            <div
-                                key={title}
-                                className="group bg-card relative overflow-hidden rounded-2xl border p-6 shadow-sm transition duration-300 hover:-translate-y-2 hover:shadow-xl"
-                            >
-                                <div
-                                    className={`absolute inset-0 bg-linear-to-br opacity-0 transition group-hover:opacity-100 ${color}`}
-                                />
+                    <Container
+                        gap="lg"
+                        className="grid sm:grid-cols-2 lg:grid-cols-4"
+                    >
+                        {features.map(({ icon: Icon, title, desc }) => (
+                            <Card key={title} variant="interactive-on-hover">
+                                <Container className="bg-background flex size-12 items-center justify-center rounded-xl shadow-sm">
+                                    <Icon />
+                                </Container>
 
-                                <div className="relative">
-                                    <div className="bg-background mb-4 flex h-12 w-12 items-center justify-center rounded-xl text-lg shadow-sm">
-                                        <Icon />
-                                    </div>
+                                <Typography variant="h3">{title}</Typography>
 
-                                    <h3 className="mb-2 font-semibold">
-                                        {title}
-                                    </h3>
-                                    <p className="text-muted-foreground text-sm">
-                                        {desc}
-                                    </p>
-                                </div>
-                            </div>
+                                <Typography color="muted" size="sm">
+                                    {desc}
+                                </Typography>
+                            </Card>
                         ))}
                     </Container>
-                </Section>
+                </Container>
 
-                <Section id="sobre" className="space-y-8 text-center">
-                    <Title level={2} className="text-3xl font-semibold">
-                        Sobre o sistema
-                    </Title>
+                <Container
+                    as="section"
+                    id="sobre"
+                    gap="lg"
+                    className="mx-auto max-w-2xl text-center"
+                >
+                    <Typography variant="h2">Sobre o sistema</Typography>
 
-                    <p className="text-muted-foreground mx-auto max-w-3xl">
+                    <Typography>
                         O StorEdge foi criado para simplificar a gestão de
                         estoque, oferecendo clareza nas movimentações e ajudando
                         na tomada de decisões com dados confiáveis.
-                    </p>
+                    </Typography>
 
-                    <div className="mx-auto grid max-w-3xl gap-6 sm:grid-cols-3">
+                    <Container gap="lg" className="grid sm:grid-cols-3">
                         {["Organização", "Produtividade", "Controle"].map(
                             (item) => (
-                                <div
+                                <Card
                                     key={item}
-                                    className="bg-card rounded-xl border p-5 text-sm font-medium shadow-sm transition hover:scale-105 hover:shadow-md"
+                                    as="p"
+                                    variant="interactive-on-hover"
                                 >
                                     {item}
-                                </div>
+                                </Card>
                             )
                         )}
-                    </div>
-                </Section>
+                    </Container>
+                </Container>
 
-                <Section id="suporte" className="space-y-6 text-center">
-                    <Title level={2} className="text-3xl font-semibold">
-                        Precisa de ajuda?
-                    </Title>
+                <Container
+                    as="section"
+                    id="suporte"
+                    gap="lg"
+                    className="text-center"
+                >
+                    <Typography variant="h2">Precisa de ajuda?</Typography>
 
-                    <p className="text-muted-foreground">
+                    <Typography>
                         Fale com nosso suporte e resolva rapidamente qualquer
                         problema.
-                    </p>
+                    </Typography>
 
                     <Link
-                        href="mailto:suporte@storedge.com"
+                        to="mailto:suporte@storedge.com"
                         variant="default"
-                        className="px-6 py-2 transition hover:scale-105"
+                        animation="scale-on-hover"
+                        className="mx-auto"
                     >
                         suporte@storedge.com
                     </Link>
-                </Section>
-            </Main>
+                </Container>
+            </Container>
 
-            <Footer className="mt-24 border-t bg-gray-200">
-                <Container className="mx-auto grid max-w-6xl gap-10 px-4 py-12 md:grid-cols-3">
-                    <Section className="space-y-3">
-                        <Title level={3}>Contato</Title>
-                        <address className="text-muted-foreground text-sm not-italic">
+            <Container as="footer" className="bg-card border-t">
+                <Container layout className="grid py-12 md:grid-cols-3">
+                    <Container as="address" className="not-italic">
+                        <Typography variant="h3">Contato</Typography>
+                        <Typography color="muted">
                             suporte@storedge.com
-                        </address>
-                    </Section>
+                        </Typography>
+                    </Container>
 
-                    <Section className="space-y-3">
-                        <Title level={3}>Navegação</Title>
-                        <ul className="space-y-2 text-sm">
+                    <Container as="nav">
+                        <Typography variant="h3">Navegação</Typography>
+                        <Container as="ul" gap="sm">
                             {navLinks.map((link) => (
                                 <li key={link.label}>
-                                    <Link href={link.href} variant="link">
+                                    <Link to={link.href} variant="link">
                                         {link.label}
                                     </Link>
                                 </li>
                             ))}
-                        </ul>
-                    </Section>
+                        </Container>
+                    </Container>
 
-                    <Section className="space-y-3">
-                        <Title level={3}>StorEdge</Title>
-                        <p className="text-muted-foreground text-sm">
+                    <Container>
+                        <Typography variant="h3">StorEdge</Typography>
+                        <Typography color="muted">
                             Sistema moderno de gestão de estoque focado em
                             simplicidade e eficiência.
-                        </p>
-                    </Section>
+                        </Typography>
+                    </Container>
                 </Container>
 
-                <div className="text-muted-foreground border-t py-4 text-center text-xs">
+                <Typography
+                    color="muted"
+                    align="center"
+                    size="xs"
+                    className="border-t py-4"
+                >
                     © {new Date().getFullYear()} StorEdge. Todos os direitos
                     reservados.
-                </div>
-            </Footer>
-        </PageContainer>
+                </Typography>
+            </Container>
+        </Container>
     )
 }

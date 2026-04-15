@@ -1,55 +1,184 @@
-import { render, screen } from "@testing-library/react"
-import { expect, vi, test, describe } from "vitest"
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
+import { render, screen, waitFor } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
+import { beforeEach, describe, expect, test, vi } from "vitest"
 import LoginPage from "./LoginPage"
 
+// mocks
+vi.mock("@/api/fn/auth", () => ({
+    loginUser: vi.fn()
+}))
+
+vi.mock("@/utils/storageCredentials", () => ({
+    defineCredentials: vi.fn()
+}))
+
+vi.mock("sonner", () => ({
+    toast: {
+        success: vi.fn(),
+        error: vi.fn()
+    }
+}))
+
+import { loginUser } from "@/api/fn/auth"
+import { defineCredentials } from "@/lib/storageCredentials"
+import { toast } from "sonner"
+
+const renderComponent = () => {
+    const queryClient = new QueryClient()
+
+    return render(
+        <QueryClientProvider client={queryClient}>
+            <LoginPage setAuthenticated={vi.fn()} />
+        </QueryClientProvider>
+    )
+}
+
 describe("LoginPage", () => {
-    test("should render the title", () => {
-        render(<LoginPage setAuthenticated={vi.fn()} />)
+    beforeEach(() => {
+        vi.clearAllMocks()
+    })
+
+    test("should render title and description", () => {
+        renderComponent()
 
         expect(
-            screen.getByRole("heading", { name: /login/i })
+            screen.getByRole("heading", { name: /entrar/i })
+        ).toBeInTheDocument()
+
+        expect(
+            screen.getByText(/acesse sua conta para continuar/i)
         ).toBeInTheDocument()
     })
 
-    test("should render name and password inputs", () => {
-        render(<LoginPage setAuthenticated={vi.fn()} />)
-
-        expect(screen.getByPlaceholderText(/nome/i)).toBeInTheDocument()
-        expect(screen.getByPlaceholderText(/senha/i)).toBeInTheDocument()
-    })
-
-    test("should render the login button", () => {
-        render(<LoginPage setAuthenticated={vi.fn()} />)
+    test("should render email and password inputs", () => {
+        renderComponent()
 
         expect(
-            screen.getByRole("button", { name: /login/i })
+            screen.getByPlaceholderText(/digite seu email/i)
+        ).toBeInTheDocument()
+
+        expect(screen.getByPlaceholderText(/••••••••/)).toBeInTheDocument()
+    })
+
+    test("should render submit button", () => {
+        renderComponent()
+
+        expect(
+            screen.getByRole("button", { name: /entrar/i })
         ).toBeInTheDocument()
     })
 
     test("should allow typing into inputs", async () => {
         const user = userEvent.setup()
-        render(<LoginPage setAuthenticated={vi.fn()} />)
+        renderComponent()
 
-        const nameInput = screen.getByPlaceholderText(/nome/i)
-        const passwordInput = screen.getByPlaceholderText(/senha/i)
+        const emailInput = screen.getByPlaceholderText(/digite seu email/i)
+        const passwordInput = screen.getByPlaceholderText(/••••••••/)
 
-        await user.type(nameInput, "vortex")
+        await user.type(emailInput, "test@email.com")
         await user.type(passwordInput, "123456")
 
-        expect(nameInput).toHaveValue("vortex")
+        expect(emailInput).toHaveValue("test@email.com")
         expect(passwordInput).toHaveValue("123456")
     })
 
-    test("should not crash on form submit", async () => {
+    test("should show validation errors when submitting empty form", async () => {
         const user = userEvent.setup()
-        render(<LoginPage setAuthenticated={vi.fn()} />)
+        renderComponent()
 
-        const button = screen.getByRole("button", { name: /login/i })
+        const button = screen.getByRole("button", { name: /entrar/i })
 
         await user.click(button)
 
-        // como não há handler, apenas garantimos que não quebra
-        expect(button).toBeInTheDocument()
+        expect(
+            await screen.findByText(/email é obrigatório/i)
+        ).toBeInTheDocument()
+        expect(
+            await screen.findByText(/senha é obrigatória/i)
+        ).toBeInTheDocument()
+    })
+
+    test("should call loginUser on valid submit", async () => {
+        const user = userEvent.setup()
+
+        vi.mocked(loginUser).mockResolvedValue({
+            token: "fake-token",
+            user: { username: "vortex" }
+        })
+
+        renderComponent()
+
+        await user.type(
+            screen.getByPlaceholderText(/digite seu email/i),
+            "test@email.com"
+        )
+
+        await user.type(screen.getByPlaceholderText(/••••••••/), "123456")
+
+        await user.click(screen.getByRole("button", { name: /entrar/i }))
+
+        await waitFor(() => {
+            expect(loginUser).toHaveBeenCalled()
+        })
+    })
+
+    test("should handle success flow correctly", async () => {
+        const user = userEvent.setup()
+        const setAuthenticated = vi.fn()
+
+        vi.mocked(loginUser).mockResolvedValue({
+            token: "fake-token",
+            user: { username: "vortex" }
+        })
+
+        const queryClient = new QueryClient()
+
+        render(
+            <QueryClientProvider client={queryClient}>
+                <LoginPage setAuthenticated={setAuthenticated} />
+            </QueryClientProvider>
+        )
+
+        await user.type(
+            screen.getByPlaceholderText(/digite seu email/i),
+            "test@email.com"
+        )
+
+        await user.type(screen.getByPlaceholderText(/••••••••/), "123456")
+
+        await user.click(screen.getByRole("button", { name: /entrar/i }))
+
+        await waitFor(() => {
+            expect(defineCredentials).toHaveBeenCalledWith(
+                "fake-token",
+                "vortex"
+            )
+
+            expect(setAuthenticated).toHaveBeenCalledWith(true)
+
+            expect(toast.success).toHaveBeenCalled()
+        })
+    })
+
+    test("should handle error flow correctly", async () => {
+        const user = userEvent.setup()
+
+        vi.mocked(loginUser).mockRejectedValue(new Error("error"))
+
+        renderComponent()
+
+        await user.type(
+            screen.getByPlaceholderText(/digite seu email/i),
+            "test@email.com"
+        )
+
+        await user.type(screen.getByPlaceholderText(/••••••••/), "123456")
+
+        await user.click(screen.getByRole("button", { name: /entrar/i }))
+
+        await waitFor(() => {
+            expect(toast.error).toHaveBeenCalled()
+        })
     })
 })

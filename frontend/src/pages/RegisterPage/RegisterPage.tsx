@@ -1,18 +1,19 @@
-import type { RegisterPageProps } from "./RegisterPage.types"
-
-import PageContainer from "../../components/containers/PageContainer/PageContainer"
-import Container from "@/components/containers/Container/Container"
-import Link from "@/components/navigation/Link/Link"
-import Title from "@/components/ui/Title/Title"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { useForm, type SubmitHandler } from "react-hook-form"
-import { registerUser } from "@/api/fn/auth"
-
-import type { RegisterInputs } from "@/types/RegisterInputs"
 import { toast } from "sonner"
+
+import { registerUser } from "@/api/fn/auth"
+import {
+    Button,
+    Card,
+    Container,
+    Input,
+    Link,
+    Typography
+} from "@/components/ui"
+import { defineCredentials } from "@/lib/storageCredentials"
+import type { RegisterInputs } from "@/types/RegisterInputs"
+import type { RegisterPageProps } from "./RegisterPage.types"
 
 export default function RegisterPage({ setAuthenticated }: RegisterPageProps) {
     const queryClient = useQueryClient()
@@ -25,9 +26,10 @@ export default function RegisterPage({ setAuthenticated }: RegisterPageProps) {
 
     const mutation = useMutation({
         mutationFn: registerUser,
-        onSuccess: () => {
+        onSuccess: (data) => {
             queryClient.invalidateQueries({ queryKey: ["user"] })
             toast.success("Conta criada com sucesso!")
+            defineCredentials(data.token, data.user.username)
             setAuthenticated(true)
         },
         onError: () => {
@@ -40,26 +42,26 @@ export default function RegisterPage({ setAuthenticated }: RegisterPageProps) {
     }
 
     return (
-        <PageContainer className="flex min-h-screen items-center justify-center px-4">
-            <Container className="bg-background w-full max-w-sm space-y-6 rounded-2xl border p-6 shadow-sm">
-                <Container className="space-y-2 text-center">
-                    <Title
-                        level={1}
-                        className="text-2xl font-semibold tracking-tight"
-                    >
+        <Container layout className="min-h-screen items-center justify-center">
+            <Card as="main" gap="lg" className="w-full max-w-lg" padding="lg">
+                <Container as="header" gap="sm" className="text-center">
+                    <Typography as="h1" variant="h2">
                         Criar conta
-                    </Title>
-                    <p className="text-muted-foreground text-sm">
+                    </Typography>
+                    <Typography color="muted">
                         Preencha os dados para começar
-                    </p>
+                    </Typography>
                 </Container>
 
                 <form
                     onSubmit={handleSubmit(onSubmit)}
-                    className="flex flex-col gap-4"
+                    className="flex flex-col gap-6"
                 >
-                    <Container className="relative space-y-2">
-                        <label htmlFor="name" className="text-sm font-medium">
+                    <Container gap="xs" className="relative">
+                        <label
+                            htmlFor="name"
+                            className="flex text-sm font-medium"
+                        >
                             Nome
                         </label>
                         <Input
@@ -71,14 +73,17 @@ export default function RegisterPage({ setAuthenticated }: RegisterPageProps) {
                             {...register("username", { required: true })}
                         />
                         {errors.username && (
-                            <span className="text-destructive absolute -bottom-3.5 left-0 text-sm">
+                            <span className="text-destructive absolute -bottom-5 left-0 text-sm">
                                 Nome é obrigatório
                             </span>
                         )}
                     </Container>
 
-                    <Container className="relative space-y-2">
-                        <label htmlFor="email" className="text-sm font-medium">
+                    <Container gap="xs" className="relative">
+                        <label
+                            htmlFor="email"
+                            className="flex text-sm font-medium"
+                        >
                             E-mail
                         </label>
                         <Input
@@ -90,16 +95,16 @@ export default function RegisterPage({ setAuthenticated }: RegisterPageProps) {
                             {...register("email", { required: true })}
                         />
                         {errors.email && (
-                            <span className="text-destructive absolute -bottom-3.5 left-0 text-sm">
+                            <span className="text-destructive absolute -bottom-5 left-0 text-sm">
                                 E-mail é obrigatório
                             </span>
                         )}
                     </Container>
 
-                    <Container className="relative space-y-2">
+                    <Container gap="xs" className="relative">
                         <label
                             htmlFor="password"
-                            className="text-sm font-medium"
+                            className="flex text-sm font-medium"
                         >
                             Senha
                         </label>
@@ -112,7 +117,7 @@ export default function RegisterPage({ setAuthenticated }: RegisterPageProps) {
                             {...register("password", { required: true })}
                         />
                         {errors.password && (
-                            <span className="text-destructive absolute -bottom-3.5 left-0 text-sm">
+                            <span className="text-destructive absolute -bottom-5 left-0 text-sm">
                                 Senha é obrigatória
                             </span>
                         )}
@@ -129,16 +134,18 @@ export default function RegisterPage({ setAuthenticated }: RegisterPageProps) {
                     </Button>
                 </form>
 
-                <p className="text-muted-foreground text-center text-sm">
-                    Já tem conta?{" "}
+                <Typography color="muted" size="sm" align="center">
+                    Já tem conta?
                     <Link
-                        className="text-primary font-medium hover:underline"
-                        href="/login"
+                        to="/login"
+                        variant="link"
+                        className="px-0.5!"
+                        replace
                     >
                         Entrar
                     </Link>
-                </p>
-            </Container>
-        </PageContainer>
+                </Typography>
+            </Card>
+        </Container>
     )
 }
