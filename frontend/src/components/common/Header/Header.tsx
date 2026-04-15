@@ -3,28 +3,20 @@ import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { FaInfo } from "react-icons/fa"
 
-import TopAppBar from "@/components/windows/TopAppBar/TopAppBar"
-import Title from "@/components/ui/Title/Title"
-
+import TopAppBar from "@/components/common/drawer/TopAppBar"
+import { Typography } from "@/components/ui"
 
 export default function Header() {
     const [showTABAbout, setshowTABAbout] = useState<boolean>(false)
 
     return (
         <>
-            <header
-                className="bg-background/70 sticky top-0 z-50 border-b backdrop-blur-xl
-                    p-4 flex items-center justify-between"
-                >
-                <Title
-                    className="text-primary text-2xl"
-                    level={1} 
-                >
+            <header className="bg-background/70 sticky top-0 z-50 flex items-center justify-between border-b p-4 backdrop-blur-xl">
+                <Typography variant="h1" color="primary">
                     StorEdge
-                </Title>
+                </Typography>
                 <Button
-                    className="text-black/70 bg-transparent hover:bg-gray-200 transition
-                        duration-300 cursor-pointer px-3 py-5 rounded-full"
+                    className="cursor-pointer rounded-full bg-transparent px-3 py-5 text-black/70 transition duration-300 hover:bg-gray-200"
                     onClick={() => setshowTABAbout(true)}
                 >
                     <FaInfo />

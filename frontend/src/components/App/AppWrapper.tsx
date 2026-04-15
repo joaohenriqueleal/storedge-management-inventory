@@ -1,10 +1,10 @@
-import { useState, useEffect } from "react"
+import { useEffect, useState } from "react"
 
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { Toaster } from "@/components/ui/toast"
-import App from "../../App/App"
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
+import App from "./App"
 
-import { loadToken } from "@/utils/storageCredentials"
+import { loadToken } from "@/lib/storageCredentials"
 import "@/lib/theme"
 
 export default function AppWrapper() {

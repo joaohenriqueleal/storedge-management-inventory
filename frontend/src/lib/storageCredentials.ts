@@ -1,30 +1,30 @@
-import Globals from "@/shared/globals"
-
+const USERNAME_KEY = "username"
+const TOKEN_KEY = "token"
 
 export function saveUsername(username: string | undefined) {
     if (!username) return
-    localStorage.setItem(Globals.usernameItem, username)
+    localStorage.setItem(USERNAME_KEY, username)
 }
 
 export function loadUsername() {
-    return localStorage.getItem(Globals.usernameItem)
+    return localStorage.getItem(USERNAME_KEY)
 }
 
 export function saveToken(token: string | undefined) {
     if (!token) return
-    localStorage.setItem(Globals.tokenItem, token)
+    localStorage.setItem(TOKEN_KEY, token)
 }
 
 export function loadToken() {
-    return localStorage.getItem(Globals.tokenItem)
+    return localStorage.getItem(TOKEN_KEY)
 }
 
 export function deleteToken() {
-    localStorage.removeItem(Globals.tokenItem)
+    localStorage.removeItem(TOKEN_KEY)
 }
 
 export function deleteUsername() {
-    localStorage.removeItem(Globals.usernameItem)
+    localStorage.removeItem(USERNAME_KEY)
 }
 
 export function defineCredentials(token: string, username: string) {

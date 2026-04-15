@@ -1,13 +1,16 @@
 import { useRef } from "react"
 
-import Title from "@/components/ui/Title/Title"
 import { Button } from "@/components/ui/button"
 
-import type { TopAppBarProps } from "./TopAppBar.types"
+import { Typography } from "@/components/ui"
 import { FaChevronLeft } from "react-icons/fa"
+import type { TopAppBarProps } from "./TopAppBar.types"
 
-
-export default function TopAppBar({ children, setShow, title }: TopAppBarProps) {
+export default function TopAppBar({
+    children,
+    setShow,
+    title = ""
+}: TopAppBarProps) {
     const containerRef = useRef<HTMLDivElement>(null)
 
     const close = () => {
@@ -28,32 +31,19 @@ export default function TopAppBar({ children, setShow, title }: TopAppBarProps) 
     return (
         <div
             ref={containerRef}
-            className="
-                fixed inset-0 h-screen w-screen z-999
-                bg-white p-6 flex flex-col gap-10
-                animate-tab-open"
+            className="animate-tab-open fixed inset-0 z-999 flex h-screen w-screen flex-col gap-10 bg-white p-6"
         >
             <div className="flex items-center gap-4 text-black">
                 <Button
-                    className="
-                        p-3 rounded-full hover:bg-purple-300 py-5
-                        transition duration-200 text-xl cursor-pointer"
+                    className="cursor-pointer rounded-full p-3 py-5 text-xl transition duration-200 hover:bg-purple-300"
                     onClick={close}
                 >
                     <FaChevronLeft />
                 </Button>
 
-                <Title
-                    className="font-semibold text-xl text-gray-600"
-                    level={1}
-                >
-                    {title || ""}
-                </Title>
+                <Typography variant="h1">{title}</Typography>
             </div>
-            <div 
-                className="pr-2 scrollbar-thin overflow-auto
-                scrollbar-thumb-gray-300 scrollbar-track-transparent"
-            >
+            <div className="scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent overflow-auto pr-2">
                 {children}
             </div>
         </div>

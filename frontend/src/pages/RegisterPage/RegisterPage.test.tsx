@@ -1,9 +1,8 @@
-import { render, screen, waitFor } from "@testing-library/react"
-import { expect, vi, test, describe, beforeEach } from "vitest"
-import userEvent from "@testing-library/user-event"
-import RegisterPage from "./RegisterPage"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
-
+import { render, screen, waitFor } from "@testing-library/react"
+import userEvent from "@testing-library/user-event"
+import { beforeEach, describe, expect, test, vi } from "vitest"
+import RegisterPage from "./RegisterPage"
 
 // mocks
 vi.mock("@/api/fn/auth", () => ({
@@ -22,7 +21,7 @@ vi.mock("sonner", () => ({
 }))
 
 import { registerUser } from "@/api/fn/auth"
-import { defineCredentials } from "@/utils/storageCredentials"
+import { defineCredentials } from "@/lib/storageCredentials"
 import { toast } from "sonner"
 
 const renderComponent = (setAuthenticated = vi.fn()) => {
@@ -55,17 +54,13 @@ describe("RegisterPage", () => {
     test("should render all inputs", () => {
         renderComponent()
 
-        expect(
-            screen.getByPlaceholderText(/seu nome/i)
-        ).toBeInTheDocument()
+        expect(screen.getByPlaceholderText(/seu nome/i)).toBeInTheDocument()
 
         expect(
             screen.getByPlaceholderText(/seu@email.com/i)
         ).toBeInTheDocument()
 
-        expect(
-            screen.getByPlaceholderText(/••••••••/)
-        ).toBeInTheDocument()
+        expect(screen.getByPlaceholderText(/••••••••/)).toBeInTheDocument()
     })
 
     test("should render submit button", () => {
@@ -97,13 +92,17 @@ describe("RegisterPage", () => {
         const user = userEvent.setup()
         renderComponent()
 
-        await user.click(
-            screen.getByRole("button", { name: /criar conta/i })
-        )
+        await user.click(screen.getByRole("button", { name: /criar conta/i }))
 
-        expect(await screen.findByText(/nome é obrigatório/i)).toBeInTheDocument()
-        expect(await screen.findByText(/e-mail é obrigatório/i)).toBeInTheDocument()
-        expect(await screen.findByText(/senha é obrigatória/i)).toBeInTheDocument()
+        expect(
+            await screen.findByText(/nome é obrigatório/i)
+        ).toBeInTheDocument()
+        expect(
+            await screen.findByText(/e-mail é obrigatório/i)
+        ).toBeInTheDocument()
+        expect(
+            await screen.findByText(/senha é obrigatória/i)
+        ).toBeInTheDocument()
     })
 
     test("should call registerUser on valid submit", async () => {
@@ -116,24 +115,16 @@ describe("RegisterPage", () => {
 
         renderComponent()
 
-        await user.type(
-            screen.getByPlaceholderText(/seu nome/i),
-            "vortex"
-        )
+        await user.type(screen.getByPlaceholderText(/seu nome/i), "vortex")
 
         await user.type(
             screen.getByPlaceholderText(/seu@email.com/i),
             "vortex@email.com"
         )
 
-        await user.type(
-            screen.getByPlaceholderText(/••••••••/),
-            "123456"
-        )
+        await user.type(screen.getByPlaceholderText(/••••••••/), "123456")
 
-        await user.click(
-            screen.getByRole("button", { name: /criar conta/i })
-        )
+        await user.click(screen.getByRole("button", { name: /criar conta/i }))
 
         await waitFor(() => {
             expect(registerUser).toHaveBeenCalled()
@@ -151,24 +142,16 @@ describe("RegisterPage", () => {
 
         renderComponent(setAuthenticated)
 
-        await user.type(
-            screen.getByPlaceholderText(/seu nome/i),
-            "vortex"
-        )
+        await user.type(screen.getByPlaceholderText(/seu nome/i), "vortex")
 
         await user.type(
             screen.getByPlaceholderText(/seu@email.com/i),
             "vortex@email.com"
         )
 
-        await user.type(
-            screen.getByPlaceholderText(/••••••••/),
-            "123456"
-        )
+        await user.type(screen.getByPlaceholderText(/••••••••/), "123456")
 
-        await user.click(
-            screen.getByRole("button", { name: /criar conta/i })
-        )
+        await user.click(screen.getByRole("button", { name: /criar conta/i }))
 
         await waitFor(() => {
             expect(defineCredentials).toHaveBeenCalledWith(
@@ -189,24 +172,16 @@ describe("RegisterPage", () => {
 
         renderComponent()
 
-        await user.type(
-            screen.getByPlaceholderText(/seu nome/i),
-            "vortex"
-        )
+        await user.type(screen.getByPlaceholderText(/seu nome/i), "vortex")
 
         await user.type(
             screen.getByPlaceholderText(/seu@email.com/i),
             "vortex@email.com"
         )
 
-        await user.type(
-            screen.getByPlaceholderText(/••••••••/),
-            "123456"
-        )
+        await user.type(screen.getByPlaceholderText(/••••••••/), "123456")
 
-        await user.click(
-            screen.getByRole("button", { name: /criar conta/i })
-        )
+        await user.click(screen.getByRole("button", { name: /criar conta/i }))
 
         await waitFor(() => {
             expect(toast.error).toHaveBeenCalled()

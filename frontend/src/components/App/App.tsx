@@ -1,17 +1,24 @@
-import { Route, BrowserRouter as Router, Routes, Navigate } from "react-router-dom"
+import {
+    Navigate,
+    Route,
+    BrowserRouter as Router,
+    Routes
+} from "react-router-dom"
 
-import type { AppProps } from "./App.types"
-
-// Pages
-import RegisterPage from "../../pages/RegisterPage/RegisterPage"
-import WelcomePage from "../../pages/WelcomePage/WelcomePage"
-import LoginPage from "../../pages/LoginPage/LoginPage"
 import Home from "@/pages/Home/Home"
+import LoginPage from "@/pages/LoginPage/LoginPage"
+import RegisterPage from "@/pages/RegisterPage/RegisterPage"
+import WelcomePage from "@/pages/WelcomePage/WelcomePage"
+
+export interface AppProps {
+    setAuthenticated: React.Dispatch<React.SetStateAction<boolean>>
+    authenticated: boolean
+}
 
 export default function App({ authenticated, setAuthenticated }: AppProps) {
     return (
         <Router>
-            <Routes>
+            <Routes >
                 <Route
                     path="/"
                     element={

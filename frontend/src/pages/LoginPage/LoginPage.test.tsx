@@ -1,9 +1,8 @@
-import { render, screen, waitFor } from "@testing-library/react"
-import { expect, vi, test, describe, beforeEach } from "vitest"
-import userEvent from "@testing-library/user-event"
-import LoginPage from "./LoginPage"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
-
+import { render, screen, waitFor } from "@testing-library/react"
+import userEvent from "@testing-library/user-event"
+import { beforeEach, describe, expect, test, vi } from "vitest"
+import LoginPage from "./LoginPage"
 
 // mocks
 vi.mock("@/api/fn/auth", () => ({
@@ -22,7 +21,7 @@ vi.mock("sonner", () => ({
 }))
 
 import { loginUser } from "@/api/fn/auth"
-import { defineCredentials } from "@/utils/storageCredentials"
+import { defineCredentials } from "@/lib/storageCredentials"
 import { toast } from "sonner"
 
 const renderComponent = () => {
@@ -59,9 +58,7 @@ describe("LoginPage", () => {
             screen.getByPlaceholderText(/digite seu email/i)
         ).toBeInTheDocument()
 
-        expect(
-            screen.getByPlaceholderText(/••••••••/)
-        ).toBeInTheDocument()
+        expect(screen.getByPlaceholderText(/••••••••/)).toBeInTheDocument()
     })
 
     test("should render submit button", () => {
@@ -94,8 +91,12 @@ describe("LoginPage", () => {
 
         await user.click(button)
 
-        expect(await screen.findByText(/email é obrigatório/i)).toBeInTheDocument()
-        expect(await screen.findByText(/senha é obrigatória/i)).toBeInTheDocument()
+        expect(
+            await screen.findByText(/email é obrigatório/i)
+        ).toBeInTheDocument()
+        expect(
+            await screen.findByText(/senha é obrigatória/i)
+        ).toBeInTheDocument()
     })
 
     test("should call loginUser on valid submit", async () => {
@@ -113,14 +114,9 @@ describe("LoginPage", () => {
             "test@email.com"
         )
 
-        await user.type(
-            screen.getByPlaceholderText(/••••••••/),
-            "123456"
-        )
+        await user.type(screen.getByPlaceholderText(/••••••••/), "123456")
 
-        await user.click(
-            screen.getByRole("button", { name: /entrar/i })
-        )
+        await user.click(screen.getByRole("button", { name: /entrar/i }))
 
         await waitFor(() => {
             expect(loginUser).toHaveBeenCalled()
@@ -149,14 +145,9 @@ describe("LoginPage", () => {
             "test@email.com"
         )
 
-        await user.type(
-            screen.getByPlaceholderText(/••••••••/),
-            "123456"
-        )
+        await user.type(screen.getByPlaceholderText(/••••••••/), "123456")
 
-        await user.click(
-            screen.getByRole("button", { name: /entrar/i })
-        )
+        await user.click(screen.getByRole("button", { name: /entrar/i }))
 
         await waitFor(() => {
             expect(defineCredentials).toHaveBeenCalledWith(
@@ -182,14 +173,9 @@ describe("LoginPage", () => {
             "test@email.com"
         )
 
-        await user.type(
-            screen.getByPlaceholderText(/••••••••/),
-            "123456"
-        )
+        await user.type(screen.getByPlaceholderText(/••••••••/), "123456")
 
-        await user.click(
-            screen.getByRole("button", { name: /entrar/i })
-        )
+        await user.click(screen.getByRole("button", { name: /entrar/i }))
 
         await waitFor(() => {
             expect(toast.error).toHaveBeenCalled()
