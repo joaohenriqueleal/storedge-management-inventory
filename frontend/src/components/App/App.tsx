@@ -3,9 +3,13 @@ import { Route, BrowserRouter as Router, Routes, Navigate } from "react-router-d
 import type { AppProps } from "./App.types"
 
 // Pages
-import RegisterPage from "../../pages/RegisterPage/RegisterPage"
-import WelcomePage from "../../pages/WelcomePage/WelcomePage"
-import LoginPage from "../../pages/LoginPage/LoginPage"
+import Configurations from "@/pages/Configurations/Configurations"
+import RegisterPage from "@/pages/RegisterPage/RegisterPage"
+import WelcomePage from "@/pages/WelcomePage/WelcomePage"
+import Categories from "@/pages/Categories/Categories"
+import LoginPage from "@/pages/LoginPage/LoginPage"
+import Products from "@/pages/Products/Products"
+import Combos from "@/pages/Combos/Combos"
 import Home from "@/pages/Home/Home"
 
 export default function App({ authenticated, setAuthenticated }: AppProps) {
@@ -23,6 +27,46 @@ export default function App({ authenticated, setAuthenticated }: AppProps) {
                     }
                 />
                 <Route
+                    path="/categorias"
+                    element={
+                        authenticated ? (
+                            <Categories />
+                        ) : (
+                            <LoginPage setAuthenticated={setAuthenticated} />
+                        )
+                    }
+                />
+                <Route
+                    path="/configuracoes"
+                    element={
+                        authenticated ? (
+                            <Configurations />
+                        ) : (
+                            <LoginPage setAuthenticated={setAuthenticated} />
+                        )
+                    }
+                />
+                <Route
+                    path="/combos"
+                    element={
+                        authenticated ? (
+                            <Combos />
+                        ) : (
+                            <LoginPage setAuthenticated={setAuthenticated} />
+                        )
+                    }
+                />
+                <Route
+                    path="/produtos"
+                    element={
+                        authenticated ? (
+                            <Products />
+                        ) : (
+                            <LoginPage setAuthenticated={setAuthenticated} />
+                        )
+                    }
+                />
+                <Route
                     path="/login"
                     element={
                         authenticated ? (
@@ -36,13 +80,12 @@ export default function App({ authenticated, setAuthenticated }: AppProps) {
                     path="/home"
                     element={
                         authenticated ? (
-                            <Home setAuthenticated={setAuthenticated} />
+                            <Home />
                         ) : (
                             <Navigate to="/login" replace />
                         )
                     }
                 />
-
                 <Route
                     path="/registro"
                     element={

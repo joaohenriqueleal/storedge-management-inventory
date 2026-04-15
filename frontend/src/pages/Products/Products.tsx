@@ -4,12 +4,12 @@ import Header from "@/components/containers/Header/Header"
 import Main from "@/components/containers/Main/Main"
 
 
-export default function Home() {
+export default function Categories() {
     return (
         <PageContainer>
             <Header />
-            <Main className="pb-20">
-                <h1>Home</h1>
+            <Main>
+                <h1>Produtos</h1>
             </Main>
             <HomeNav />
         </PageContainer>

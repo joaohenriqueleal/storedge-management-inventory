@@ -3,7 +3,7 @@ import LogoStoredge from "../../../assets/logo.png"
 
 import Container from "../../containers/Container/Container"
 import { Link } from "@/components/ui/link"
-import Img from "./Img/Img"
+import Img from "../../ui/Img/Img"
 import { Button } from "@/components/ui/button"
 import { useTheme } from "@/lib/theme"
 import {
