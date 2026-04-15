@@ -5,10 +5,16 @@ import {
     Routes
 } from "react-router-dom"
 
-import Home from "@/pages/Home/Home"
-import LoginPage from "@/pages/LoginPage/LoginPage"
+// Pages
+import Configurations from "@/pages/Configurations/Configurations"
 import RegisterPage from "@/pages/RegisterPage/RegisterPage"
 import WelcomePage from "@/pages/WelcomePage/WelcomePage"
+import Categories from "@/pages/Categories/Categories"
+import LoginPage from "@/pages/LoginPage/LoginPage"
+import Products from "@/pages/Products/Products"
+import Combos from "@/pages/Combos/Combos"
+import Home from "@/pages/Home/Home"
+
 
 export interface AppProps {
     setAuthenticated: React.Dispatch<React.SetStateAction<boolean>>
@@ -30,6 +36,46 @@ export default function App({ authenticated, setAuthenticated }: AppProps) {
                     }
                 />
                 <Route
+                    path="/categorias"
+                    element={
+                        authenticated ? (
+                            <Categories />
+                        ) : (
+                            <LoginPage setAuthenticated={setAuthenticated} />
+                        )
+                    }
+                />
+                <Route
+                    path="/configuracoes"
+                    element={
+                        authenticated ? (
+                            <Configurations />
+                        ) : (
+                            <LoginPage setAuthenticated={setAuthenticated} />
+                        )
+                    }
+                />
+                <Route
+                    path="/combos"
+                    element={
+                        authenticated ? (
+                            <Combos />
+                        ) : (
+                            <LoginPage setAuthenticated={setAuthenticated} />
+                        )
+                    }
+                />
+                <Route
+                    path="/produtos"
+                    element={
+                        authenticated ? (
+                            <Products />
+                        ) : (
+                            <LoginPage setAuthenticated={setAuthenticated} />
+                        )
+                    }
+                />
+                <Route
                     path="/login"
                     element={
                         authenticated ? (
@@ -43,13 +89,12 @@ export default function App({ authenticated, setAuthenticated }: AppProps) {
                     path="/home"
                     element={
                         authenticated ? (
-                            <Home setAuthenticated={setAuthenticated} />
+                            <Home />
                         ) : (
                             <Navigate to="/login" replace />
                         )
                     }
                 />
-
                 <Route
                     path="/registro"
                     element={

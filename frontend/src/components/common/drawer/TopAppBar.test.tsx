@@ -48,7 +48,7 @@ describe("TopAppBar", () => {
 
         const wrapper = container.firstChild as HTMLElement
 
-        expect(wrapper.classList.contains("anim-top-bar-close")).toBe(true)
+        expect(wrapper.classList.contains("animate-tab-close")).toBe(true)
 
         fireEvent.animationEnd(wrapper)
 

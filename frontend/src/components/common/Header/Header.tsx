@@ -1,10 +1,12 @@
 import { useState } from "react"
 
-import { Button } from "@/components/ui/button"
 import { FaInfo } from "react-icons/fa"
 
 import TopAppBar from "@/components/common/drawer/TopAppBar"
+import AboutTAB from "@/components/tabs/AboutTAB/AboutTAB"
+import { Button } from "@/components/ui/button"
 import { Typography } from "@/components/ui"
+
 
 export default function Header() {
     const [showTABAbout, setshowTABAbout] = useState<boolean>(false)
@@ -24,7 +26,7 @@ export default function Header() {
             </header>
             {showTABAbout && (
                 <TopAppBar title="Sobre" setShow={setshowTABAbout}>
-                    <></>
+                    <AboutTAB />
                 </TopAppBar>
             )}
         </>
