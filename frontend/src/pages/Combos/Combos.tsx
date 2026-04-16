@@ -1,6 +1,6 @@
 import PageContainer from "@/components/containers/PageContainer/PageContainer"
 import HomeNav from "@/components/navigation/HomeNav/HomeNav"
-import Header from "@/components/containers/Header/Header"
+import Header from "@/components/common/Header/Header"
 import Main from "@/components/containers/Main/Main"
 
 

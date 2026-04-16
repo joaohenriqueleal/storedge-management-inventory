@@ -1,7 +1,7 @@
 import { motion } from "framer-motion"
 
-import Container from "@/components/containers/Container/Container"
-import Title from "@/components/ui/Title/Title"
+import { Typography } from "@/components/ui/typography"
+import { Container } from "@/components/ui/container"
 
 
 export default function AboutTAB() {
@@ -17,9 +17,9 @@ export default function AboutTAB() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6 }}
             >
-                <Title level={1} className="text-3xl font-bold text-gray-800 mb-4">
+                <Typography variant="h1" className="text-3xl font-bold text-gray-800 mb-4">
                     O que é StorEdge?
-                </Title>
+                </Typography>
 
                 <p className="text-gray-600 leading-relaxed text-lg mb-4">
                     O <span className="font-semibold text-gray-800">StorEdge</span> é
@@ -37,27 +37,27 @@ export default function AboutTAB() {
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
                     <div className="p-4 bg-gray-50 rounded-xl shadow-sm">
-                        <Title level={3} className="font-semibold text-gray-800">
+                        <Typography variant="h1" className="font-semibold text-gray-800">
                             Rápido
-                        </Title>
+                        </Typography>
                         <p className="text-sm text-gray-600 mt-1">
                             Acesso otimizado e baixa latência.
                             </p>
                     </div>
 
                     <div className="p-4 bg-gray-50 rounded-xl shadow-sm">
-                        <Title level={3} className="font-semibold text-gray-800">
+                        <Typography variant="h3" className="font-semibold text-gray-800">
                             Seguro
-                        </Title>
+                        </Typography>
                         <p className="text-sm text-gray-600 mt-1">
                             Proteção de dados com criptografia moderna.
                             </p>
                     </div>
 
                     <div className="p-4 bg-gray-50 rounded-xl shadow-sm">
-                        <Title level={3} className="font-semibold text-gray-800">
+                        <Typography variant="h3" className="font-semibold text-gray-800">
                             Escalável
-                        </Title>
+                        </Typography>
                         <p className="text-sm text-gray-600 mt-1">
                             Cresce conforme sua necessidade.
                         </p>

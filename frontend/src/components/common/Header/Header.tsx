@@ -18,7 +18,7 @@ export default function Header() {
                     StorEdge
                 </Typography>
                 <Button
-                    className="cursor-pointer rounded-full bg-transparent px-3 py-5 text-black/70 transition duration-300 hover:bg-gray-200"
+                    className="cursor-pointer rounded-full bg-primary px-3 py-5 text-black/70 transition duration-300"
                     onClick={() => setshowTABAbout(true)}
                 >
                     <FaInfo />
