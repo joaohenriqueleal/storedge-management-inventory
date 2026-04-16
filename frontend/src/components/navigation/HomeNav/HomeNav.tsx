@@ -15,7 +15,7 @@ export default function HomeNav() {
 
     const path = location.pathname
 
-    const isHome = path === '/'
+    const isHome = path === '/home'
     const isCategories = path.includes('categorias')
     const isConfig = path.includes('configuracoes')
     const isProducts = path.includes('produtos')
@@ -27,7 +27,8 @@ export default function HomeNav() {
                 bg-gray-50 dark:bg-black/96 p-4 flex items-center justify-center"
         >
             <Container
-                className="flex items-center justify-between w-full max-w-230 px-4 md:px-0"
+                className="flex items-center justify-between w-full max-w-230 px-4 md:px-0
+                    flex-row"
             >
                 <Link
                     className={`${isHome ? linkSelectedStyles : linksStyles}`}

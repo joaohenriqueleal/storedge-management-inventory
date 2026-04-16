@@ -29,7 +29,7 @@ export default function LoginPage({ setAuthenticated }: LoginPageProps) {
         onSuccess: (data) => {
             queryClient.invalidateQueries({ queryKey: ["user"] })
             toast.success("Login realizado com sucesso!")
-            defineCredentials(data.token, data.user.username)
+            defineCredentials(data.token, data.user.username, data.user.email)
             setAuthenticated(true)
             console.log(data)
         },

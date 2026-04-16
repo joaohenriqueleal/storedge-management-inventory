@@ -29,7 +29,7 @@ export default function RegisterPage({ setAuthenticated }: RegisterPageProps) {
         onSuccess: (data) => {
             queryClient.invalidateQueries({ queryKey: ["user"] })
             toast.success("Conta criada com sucesso!")
-            defineCredentials(data.token, data.user.username)
+            defineCredentials(data.token, data.user.username, data.user.email)
             setAuthenticated(true)
         },
         onError: () => {
@@ -43,7 +43,7 @@ export default function RegisterPage({ setAuthenticated }: RegisterPageProps) {
 
     return (
         <Container layout className="min-h-screen items-center justify-center">
-            <Card as="main" gap="lg" className="w-full max-w-lg" padding="lg">
+            <Card as="main" gap="lg" className="w-full max-w-lg flex-col" padding="lg">
                 <Container as="header" gap="sm" className="text-center">
                     <Typography as="h1" variant="h2">
                         Criar conta
