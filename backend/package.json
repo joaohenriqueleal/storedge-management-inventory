@@ -7,7 +7,7 @@
     "dev": "prisma generate && tsx --watch src/index.ts",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "prisma generate && tsc && tsc-alias",
-    "start": "node dist/index.js"
+    "start": "node dist/src/index.js"
   },
   "keywords": [],
   "author": "",
@@ -15,7 +15,7 @@
   "type": "commonjs",
   "dependencies": {
     "@prisma/adapter-better-sqlite3": "^7.7.0",
-    "@prisma/client": "^6.19.3",
+    "@prisma/client": "^7.7.0",
     "@types/jsonwebtoken": "^9.0.10",
     "axios": "^1.15.0",
     "bcrypt": "^6.0.0",
@@ -31,7 +31,7 @@
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",
     "@types/node": "^25.5.2",
-    "prisma": "^6.19.3",
+    "prisma": "^7.7.0",
     "tsc-alias": "^1.8.16",
     "tsx": "^4.21.0",
     "typescript": "^6.0.2"
