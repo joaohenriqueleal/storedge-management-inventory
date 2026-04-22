@@ -14,7 +14,7 @@ export default function Header() {
 
     return (
         <>
-            <header className="bg-background/70 sticky top-0 z-50 border-b p-4 backdrop-blur-xl">
+            <header className="bg-background/70 sticky top-0 z-50 p-4 backdrop-blur-xl">
                 <Container
                     className="flex flex-row items-center justify-between w-full mx-auto
                         max-w-230"

@@ -6,11 +6,12 @@ import { Container } from "@/components/ui/container"
 
 
 export default function HomeNav() {
-    const linksStyles = `flex flex-col gap-2 items-center hover:text-gray-500 trnasition
-        duration-200`
-    const linkSelectedStyles = "text-gray-500 flex flex-col gap-2 items-center"
-    const legendStyles = "text-xs md:text-sm font-bold"
-    const iconsStyles = "h-7 md:h-9"
+    const linksStyles = `flex flex-col gap-2 items-center hover:text-gray-500
+        transition duration-200`
+    const linkSelectedStyles = `text-gray-500 flex flex-col gap-2 items-center border-b-4
+        border-gray-500 p-2`
+    const legendStyles = "text-xs md:text-sm font-bold hidden md:block"
+    const iconsStyles = "h-6 md:h-9 text-black dark:text-gray-800"
     const location = useLocation()
 
     const path = location.pathname

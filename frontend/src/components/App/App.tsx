@@ -49,7 +49,7 @@ export default function App({ authenticated, setAuthenticated }: AppProps) {
                     path="/configuracoes"
                     element={
                         authenticated ? (
-                            <Configurations />
+                            <Configurations setAuthenticated={setAuthenticated} />
                         ) : (
                             <LoginPage setAuthenticated={setAuthenticated} />
                         )
