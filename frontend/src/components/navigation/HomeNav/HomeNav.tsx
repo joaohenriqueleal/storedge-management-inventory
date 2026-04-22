@@ -11,7 +11,7 @@ export default function HomeNav() {
     const linkSelectedStyles = `text-gray-500 flex flex-col gap-2 items-center border-b-4
         border-gray-500 p-2`
     const legendStyles = "text-xs md:text-sm font-bold hidden md:block"
-    const iconsStyles = "h-6 md:h-9 text-black dark:text-gray-800"
+    const iconsStyles = "h-6 md:h-9 text-black dark:text-gray-300"
     const location = useLocation()
 
     const path = location.pathname

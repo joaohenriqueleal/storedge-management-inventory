@@ -19,11 +19,16 @@ export default function Header() {
                     className="flex flex-row items-center justify-between w-full mx-auto
                         max-w-230"
                     >
-                    <Typography variant="h1" color="primary">
+                    <Typography
+                        className="text-2xl md:text-3xl xl:text-3xl lg:text-3xl"
+                        color="primary"
+                        variant="h1"
+                    >
                         StorEdge
                     </Typography>
                     <Button
-                        className="cursor-pointer rounded-full bg-primary px-3 py-5 text-black/70 transition duration-300"
+                        className="cursor-pointer rounded-full bg-primary px-3 py-5
+                            dark:text-black/70 text-white transition duration-300"
                         onClick={() => setshowTABAbout(true)}
                     >
                         <FaInfo />

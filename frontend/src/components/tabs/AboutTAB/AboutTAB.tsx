@@ -17,7 +17,11 @@ export default function AboutTAB() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6 }}
             >
-                <Typography variant="h1" className="text-3xl font-bold text-gray-800 mb-4">
+                <Typography
+                    variant="h1"
+                    className="text-2xl md:text-2xl xl:text-2xl font-bold
+                        text-gray-800 mb-4"
+                    >
                     O que é StorEdge?
                 </Typography>
 
@@ -37,7 +41,10 @@ export default function AboutTAB() {
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
                     <div className="p-4 bg-gray-50 rounded-xl shadow-sm">
-                        <Typography variant="h1" className="font-semibold text-gray-800">
+                        <Typography
+                            className="font-semibold text-gray-800 text-xl xl:text-xl"
+                            variant="h1"
+                        >
                             Rápido
                         </Typography>
                         <p className="text-sm text-gray-600 mt-1">

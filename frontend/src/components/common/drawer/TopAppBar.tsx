@@ -41,7 +41,7 @@ export default function TopAppBar({
                     <FaChevronLeft />
                 </Button>
 
-                <Typography variant="h1">{title}</Typography>
+                <Typography variant="h1" className="text-xl xl:text-xl md:text-xl">{title}</Typography>
             </div>
             <div className="scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent overflow-auto pr-2">
                 {children}

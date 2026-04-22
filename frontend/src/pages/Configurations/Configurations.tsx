@@ -5,12 +5,14 @@ import HomeNav from "@/components/navigation/HomeNav/HomeNav"
 import Header from "@/components/common/Header/Header"
 import Main from "@/components/containers/Main/Main"
 import { Container } from "@/components/ui"
+import { Button } from "@/components/ui"
 
 import { loadUsername } from "@/lib/storageCredentials"
-import { FaUser } from "react-icons/fa"
+import { FaUser, FaSun, FaMoon } from "react-icons/fa"
 
 // buttons
 import LogOutButton from "@/components/common/buttons/LogOutButton"
+import { useTheme } from "@/lib/theme"
 
 
 interface ConfigurationsProps {
@@ -19,6 +21,7 @@ interface ConfigurationsProps {
 
 export default function Configurations({ setAuthenticated } : ConfigurationsProps ) {
     const [username, setUsername] = useState<string>('')
+    const {theme, toggleTheme} = useTheme()
 
     useEffect(() => {
         setUsername(loadUsername() || 'user')
@@ -37,6 +40,13 @@ export default function Configurations({ setAuthenticated } : ConfigurationsProp
                     <h1 className="text-xl">Olá, {username}</h1>
                 </Container>
                 <Container className="dark:bg-black p-4 rounded-2xl bg-gray-200">
+                    <Button
+                        className="p-6 bg-gray-800 cursor-pointer hover:bg-gray-700
+                            transition duration-200"
+                        onClick={toggleTheme}
+                    >
+                        Alterar tema {theme === "dark" ? <FaSun /> : <FaMoon />}
+                    </Button>
                     <LogOutButton setAuthenticated={setAuthenticated} />
                 </Container>
             </Main>
